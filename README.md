@@ -15,3 +15,16 @@ https://gorm.io/docs/
 `
 go get -u github.com/jinzhu/gorm
 `
+### redis
+https://github.com/go-redis/redis
+```
+go get -u github.com/go-redis/redis
+go get -u github.com/go-redis/cache
+```
+
+
+### 网络
+https://github.com/gin-gonic/gin
+`
+go get -u github.com/gin-gonic/gin
+`

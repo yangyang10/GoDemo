@@ -21,6 +21,7 @@ import (
 func main() {
 	//链接数据库
 	dao.Open()
+	defer dao.Close()
 
 	router := gin.Default()
 
@@ -38,29 +39,29 @@ func getBoxConfig(c *gin.Context) {
 	boxId, err := strconv.Atoi(c.Query("boxId"))
 	fmt.Printf("接收到的参数是=%d", boxId)
 	if err == nil {
-		boxConfig,er :=	dao.QueryBoxConfig(boxId)
-		if er != nil{
+		boxConfig, er := dao.QueryBoxConfig(boxId)
+		if er != nil {
 			var resp Resp
 			resp.Code = "400"
 			resp.Msg = er.Error()
-			c.JSON(http.StatusOK,resp)
-		}else if boxConfig == nil {
+			c.JSON(http.StatusOK, resp)
+		} else if boxConfig == nil {
 			var resp Resp
 			resp.Code = "200"
 			resp.Msg = "没有数据"
-			c.JSON(http.StatusOK,resp)
-		}else{
+			c.JSON(http.StatusOK, resp)
+		} else {
 			var successRes RespSuccess
 			successRes.Code = "200"
 			successRes.Msg = "获取成功"
 			successRes.Data = boxConfig
-			c.JSON(http.StatusOK,successRes)
+			c.JSON(http.StatusOK, successRes)
 		}
-	}else{
+	} else {
 		var resp Resp
 		resp.Code = "400"
 		resp.Msg = "box id 错误"
-		c.JSON(http.StatusOK,resp)
+		c.JSON(http.StatusOK, resp)
 	}
 }
 
@@ -69,23 +70,23 @@ func updateBoxConfig(c *gin.Context) {
 	var boxBean model.Boxconfig
 	var resp Resp
 
-	if c.ShouldBindJSON(&boxBean) == nil{
+	if c.ShouldBindJSON(&boxBean) == nil {
 		fmt.Printf("接收到的boxId=%d", boxBean.BoxId)
-		if err :=dao.UpdateBoxConfig(&boxBean); err == nil{
+		if err := dao.UpdateBoxConfig(&boxBean); err == nil {
 			resp.Code = "200"
 			resp.Msg = "更新成功过"
-			c.JSON(http.StatusOK,resp)
+			c.JSON(http.StatusOK, resp)
 			return
-		}else{
+		} else {
 			resp.Code = "400"
 			resp.Msg = err.Error()
-			c.JSON(http.StatusOK,resp)
+			c.JSON(http.StatusOK, resp)
 			return
 		}
 	}
 	resp.Code = "400"
 	resp.Msg = "参数错误"
-	c.JSON(http.StatusOK,resp)
+	c.JSON(http.StatusOK, resp)
 }
 
 type Resp struct {
