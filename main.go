@@ -8,8 +8,10 @@
 package main
 
 import (
+	"GoDemo/configs"
 	"GoDemo/model"
 	"GoDemo/src/dao"
+	"GoDemo/src/redis"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -22,6 +24,8 @@ func main() {
 	//链接数据库
 	dao.Open()
 	defer dao.Close()
+	//redis
+	redis.Client()
 
 	router := gin.Default()
 
@@ -39,22 +43,46 @@ func getBoxConfig(c *gin.Context) {
 	boxId, err := strconv.Atoi(c.Query("boxId"))
 	fmt.Printf("接收到的参数是=%d", boxId)
 	if err == nil {
-		boxConfig, er := dao.QueryBoxConfig(boxId)
-		if er != nil {
+		var requestRedisKey string
+		if boxId == configs.BOX_ID_GOLD {
+			requestRedisKey = redis.Key.BoxGold.GetKey()
+		} else if boxId == configs.BOX_ID_DIAMONDS {
+			requestRedisKey = redis.Key.BoxDiamonds.GetKey()
+		} else {
 			var resp Resp
 			resp.Code = "400"
-			resp.Msg = er.Error()
+			resp.Msg = "找不到 box id"
 			c.JSON(http.StatusOK, resp)
-		} else if boxConfig == nil {
-			var resp Resp
-			resp.Code = "200"
-			resp.Msg = "没有数据"
-			c.JSON(http.StatusOK, resp)
+			return
+		}
+		redisBoxconfig := model.Boxconfig{}
+		if err := redis.Client().GetObject(requestRedisKey, &redisBoxconfig); err != nil {
+			boxConfig, er := dao.QueryBoxConfig(boxId)
+			if er != nil {
+				var resp Resp
+				resp.Code = "400"
+				resp.Msg = er.Error()
+				c.JSON(http.StatusOK, resp)
+			} else if boxConfig == nil {
+				var resp Resp
+				resp.Code = "200"
+				resp.Msg = "没有数据"
+				c.JSON(http.StatusOK, resp)
+			} else {
+				var successRes RespSuccess
+				successRes.Code = "200"
+				successRes.Msg = "获取成功"
+				successRes.Data = boxConfig
+				c.JSON(http.StatusOK, successRes)
+				if err := redis.Client().SetObject(requestRedisKey, &boxConfig); err != nil {
+					fmt.Printf("添加到redis错误=%s", err.Error())
+				}
+			}
 		} else {
 			var successRes RespSuccess
 			successRes.Code = "200"
-			successRes.Msg = "获取成功"
-			successRes.Data = boxConfig
+			successRes.Msg = "redis获取成功"
+			successRes.Data = &redisBoxconfig
 			c.JSON(http.StatusOK, successRes)
 		}
 	} else {
@@ -72,6 +100,21 @@ func updateBoxConfig(c *gin.Context) {
 
 	if c.ShouldBindJSON(&boxBean) == nil {
 		fmt.Printf("接收到的boxId=%d", boxBean.BoxId)
+		if boxBean.BoxId == configs.BOX_ID_GOLD {
+			if _, err := redis.Client().Del(redis.Key.BoxGold.GetKey()); err != nil {
+				fmt.Printf("移除黄金蛋 redis 失败")
+			} else {
+				fmt.Printf("移除黄金蛋 redis 成功")
+			}
+
+		} else if boxBean.BoxId == configs.BOX_ID_DIAMONDS {
+			if _, err := redis.Client().Del(redis.Key.BoxDiamonds.GetKey()); err != nil {
+				fmt.Printf("移除钻石蛋 redis 失败")
+			} else {
+				fmt.Printf("移除钻石蛋 redis 成功")
+			}
+
+		}
 		if err := dao.UpdateBoxConfig(&boxBean); err == nil {
 			resp.Code = "200"
 			resp.Msg = "更新成功过"

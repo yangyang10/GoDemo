@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25516fd9-e404-464e-a312-0563858d4c52" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/redis/redis_init.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redis/redis_key.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redis/redis_key_value.go" afterDir="false" />
+    <list default="true" id="25516fd9-e404-464e-a312-0563858d4c52" name="Default Changelist" comment="添加redis库">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/redis_init.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/redis_init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/redis_key.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/redis_key.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/redis_key_value.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/redis_key_value.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,6 +38,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
@@ -100,6 +100,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加redis库" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加redis库" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -8,4 +8,6 @@
 package redis
 
 type RedisKey struct {
+	BoxGold     KeyValue //黄金蛋
+	BoxDiamonds KeyValue //钻石蛋
 }
