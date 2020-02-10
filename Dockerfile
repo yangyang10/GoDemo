@@ -25,7 +25,7 @@
 
 #**********************测试**************************#
 
-#docker image build -t godemo .
+#docker build -t godemo:1.0 .
 #https://blog.csdn.net/hanyajun0123/article/details/90681253
 # build stage
 FROM golang:1.13.5 AS builder
