@@ -27,27 +27,29 @@
 
 #docker build -t godemo:1.0 .
 #https://blog.csdn.net/hanyajun0123/article/details/90681253
-# build stage
+# build start
 FROM golang:1.13.5 AS builder
-#ENV GOPROXY https://goproxy.io
 ENV GO111MODULE on
 
 WORKDIR /go/cache
 
-ADD go.mod .
-ADD go.sum .
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
-WORKDIR /go/release
-
-ADD . .
+WORKDIR /go/build
 
 RUN GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -installsuffix cgo -o godemo main.go
 
+#build end
+
+
 FROM alpine:3.8
 
+WORKDIR /go/release
+
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-COPY --from=builder /go/release/godemo /
+COPY --from=builder /go/build/godemo .
 EXPOSE 3000
 CMD ["/godemo"]
 
