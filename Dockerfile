@@ -38,6 +38,7 @@ COPY go.sum .
 RUN go mod download
 
 WORKDIR /go/build
+COPY . .
 
 RUN GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -installsuffix cgo -o godemo main.go
 
