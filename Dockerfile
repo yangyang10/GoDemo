@@ -50,7 +50,7 @@ FROM alpine:3.8
 WORKDIR /go/release
 
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-COPY --from=builder /go/build/godemo .
+COPY --from=builder /go/build/godemo /
 EXPOSE 3000
 CMD ["/godemo"]
 
