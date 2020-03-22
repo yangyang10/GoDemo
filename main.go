@@ -10,6 +10,8 @@ package main
 import (
 	"GoDemo/configs"
 	"GoDemo/model"
+	"GoDemo/pkg/util"
+	"GoDemo/routers"
 	"GoDemo/src/dao"
 	"GoDemo/src/redis"
 	"encoding/json"
@@ -27,11 +29,20 @@ func main() {
 	//redis
 	redis.Client()
 
-	router := gin.Default()
+	routersInit := routers.InitRouter(util.AppNameApi)
+	readTimeout := configs.ReadTimeout
+	writeTimeout := configs.WriteTimeout
+	endPoint := fmt.Sprintf(":%d", configs.ApiHttpPort)
 
-	router.GET("/getBoxConfig", getBoxConfig)
-	router.POST("/updateBoxConfig", updateBoxConfig)
-	router.Run(":3000")
+	server := &http.Server{
+		Addr:         endPoint,
+		Handler:      routersInit,
+		ReadTimeout:  readTimeout,
+		WriteTimeout: writeTimeout,
+	}
+	fmt.Printf("[info] start http server listening %s\n", endPoint)
+
+	server.ListenAndServe()
 
 }
 

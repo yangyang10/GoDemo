@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25516fd9-e404-464e-a312-0563858d4c52" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/deployments/docker-compose.yml" afterDir="false" />
+    <list default="true" id="25516fd9-e404-464e-a312-0563858d4c52" name="Default Changelist" comment="添加docker-compose">
+      <change afterPath="$PROJECT_DIR$/pkg/app/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/e/code.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/e/msg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/util/type.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/api/box_api.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +120,8 @@
     <MESSAGE value="redis 操作demo" />
     <MESSAGE value="dockerfile添加" />
     <MESSAGE value="部署到docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="部署到docker" />
+    <MESSAGE value="添加docker-compose" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加docker-compose" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
